@@ -24,7 +24,16 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A hands-on project to test your skills with NestJS, GraphQL, and database operations by completing tasks like feature implementation, bug fixing, and data modification.
+
+
+## Your tasks are:
+
+-  New Feature: Introduce a Client entity (and CRUD) linked to the Invoice entity with a relationship.
+-  Modification: Add a field to Invoice to link to a client and modify the GraphQL resolver to fetch invoices by client
+-  Fix the bug: Invoice creation seems to be malfunctioning
+
+### Note: You don't have to fix/implement full CRUD for Invoices. Just the creation bug!
 
 ## Installation
 
@@ -32,7 +41,26 @@
 $ pnpm install
 ```
 
+## Build the project first
+
+```bash
+$ pnpm run build
+```
+
 ## Running the app
+
+```bash
+# Run this first in order to create a database  
+$ docker compose up
+```
+
+## Run migrations
+
+```bash
+$ pnpm migration:up
+```
+
+## Start the project
 
 ```bash
 # development
@@ -43,19 +71,6 @@ $ pnpm run start:dev
 
 # production mode
 $ pnpm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
 ```
 
 ## Support

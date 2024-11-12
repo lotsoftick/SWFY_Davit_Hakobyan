@@ -17,7 +17,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "pnpm exec ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/database/postgres/providers/database.providers.ts",
+    "migration:create": "npx typeorm migration:create",
+    "migration:up": "chmod a+x migrate.sh && ./migrate.sh",
+    "migration:down": "npx typeorm migration:revert -d dist/database/postgres/providers/database.providers.js",
+    "migration:show": "npx typeorm migration:show -d dist/database/postgres/providers/database.providers.js"
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
@@ -30,8 +35,10 @@
     "class-validator": "^0.14.1",
     "graphql": "^16.9.0",
     "graphql-type-json": "^0.3.2",
+    "pg": "^8.13.1",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
