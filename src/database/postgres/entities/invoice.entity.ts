@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ClientEntity } from './client.entity';
 import { IsNumber, IsString } from 'class-validator';
 
 @Entity('invoices')
@@ -14,6 +15,9 @@ export class InvoiceEntity {
 
   @Column({ type: 'jsonb', nullable: true, name: 'customer_data' })
   customerData?: object;
+
+  @ManyToOne(() => ClientEntity, (client) => client.invoices)
+  client: ClientEntity;
 }
 
 export class LineItems {
