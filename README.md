@@ -37,12 +37,14 @@ A hands-on project to test your skills with NestJS, GraphQL, and database operat
       - Updated base.model to remove snake_case, ensuring consistent camelCase syntax across all application responses.
       - Modified GetByIdArgs to use UUID instead of int, aligning with the use of UUID in the Invoice migration file instead of a numerical ID. 
 -  Modification: Add a field to Invoice to link to a client and modify the GraphQL resolver to fetch invoices by client
+      - Added client_id field in invoice table
+      - Implemented functionality by getting invoices by client id
 -  Fix the bug: Invoice creation seems to be malfunctioning
-   -  Created migration and added fileds quoteNumber, status, issuedAt
-   -  Refactored invoice.module ensuring consistent camelCase syntax across all application responses.
-   -  Added clientId required variable in invoice creation payload
-   -  Implemented saving data invoice table when invoice is created
-   -  Implemented reading data from invoice table when geting invoice by id
+      -  Created migration and added fileds quoteNumber, status, issuedAt
+      -  Refactored invoice.module ensuring consistent camelCase syntax across all application responses.
+      -  Added clientId required variable in invoice creation payload
+      -  Implemented saving data invoice table when invoice is created
+      -  Implemented reading data from invoice table when geting invoice by id
 
 ### Note: You don't have to fix/implement full CRUD for Invoices. Just the creation bug!
 

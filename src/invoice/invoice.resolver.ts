@@ -16,6 +16,11 @@ import {
   GetInvoiceSuccess,
   GetInvoiceUnion,
 } from './models/getById/get.invoice';
+import {
+  GetInvoicesByClientFailure,
+  GetInvoicesByClientSuccess,
+  GetInvoicesByClientUnion,
+} from './models/getByClient/get-by-client.invoice.model';
 
 @Resolver(() => InvoiceModel)
 export class InvoiceResolver {
@@ -55,6 +60,22 @@ export class InvoiceResolver {
       throw new InvoiceNotFoundException();
     } catch (e) {
       return new CreateInvoiceFailure({ message: e.message });
+    }
+  }
+
+  @Query(() => GetInvoicesByClientUnion)
+  @UseFilters(new HttpExceptionFilter(GetInvoicesByClientFailure))
+  public async getInvoicesByClient(
+    @Args('clientId', { type: () => String }) clientId: string,
+  ) {
+    try {
+      const data = await this.service.findByClientId(clientId);
+      return new GetInvoicesByClientSuccess(data);
+    } catch (e) {
+      return new GetInvoicesByClientFailure({
+        message: e.message,
+        alerts: [{ message: e.message }],
+      });
     }
   }
 }

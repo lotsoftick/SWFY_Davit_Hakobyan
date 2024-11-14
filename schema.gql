@@ -52,6 +52,7 @@ type Alert {
 
 type Query {
   getQuote(args: GetByIdArgs!): GetInvoiceById!
+  getInvoicesByClient(clientId: String!): GetInvoicesByClient!
   getClientById(args: GetByIdArgs!): GetClientById!
   findAllClients: FindAllClients!
 }
@@ -97,6 +98,23 @@ interface IFailure {
 
 input GetByIdArgs {
   id: String!
+}
+
+union GetInvoicesByClient = GetInvoicesByClientSuccess | GetInvoicesByClientFailure
+
+type GetInvoicesByClientSuccess implements ISuccess {
+  code: ErrorCode
+  statusCode: Int
+  message: String
+  alerts: [Alert!]
+  data: [InvoiceModel!]!
+}
+
+type GetInvoicesByClientFailure implements IFailure {
+  code: ErrorCode
+  statusCode: Int
+  message: String
+  alerts: [Alert!]!
 }
 
 union GetClientById = GetClientSuccess | GetClientFailure
