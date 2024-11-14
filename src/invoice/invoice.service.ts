@@ -1,37 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateInvoiceArgs } from './dto/create.invoice.args';
 import { InvoiceModel } from './models/invoice.model';
 import { plainToInstance } from 'class-transformer';
+import { DataSource, Repository } from 'typeorm';
+import { InvoiceEntity } from 'src/database/postgres/entities';
+import { InvoiceNotFoundException } from 'src/common/exception/invoice.exception';
 
 @Injectable()
 export class InvoiceService {
-  public async findById({ id }: { id: string }) {
-    const invoice: InvoiceModel = {
-      id: id,
-      name: 'Invoice',
-      status: 'Draft',
-      quoteNumber: '1',
-      lineItems: [],
-      deletedAt: null,
-      issuedAt: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+  private readonly repository: Repository<InvoiceEntity>;
 
+  constructor(@Inject('DATA_SOURCE') private dataSource: DataSource) {
+    this.repository = this.dataSource.getRepository(InvoiceEntity);
+  }
+
+  public async findById({ id }: { id: string }) {
+    const invoice = await this.repository.findOne({
+      where: { id },
+      relations: {
+        client: true,
+      },
+    });
+
+    if (!invoice) {
+      throw new InvoiceNotFoundException();
+    }
     return plainToInstance(InvoiceModel, invoice);
   }
 
   public async create(args: CreateInvoiceArgs) {
-    const invoice: InvoiceModel = {
-      id: '1',
-      name: 'Invoice',
+    const invoice = await this.repository.save({
+      ...args,
       status: 'Draft',
-      quoteNumber: '1',
-      lineItems: args.line_items,
+      quoteNumber: Date.now(),
       issuedAt: new Date(),
-      customerData: args.customerData,
-    };
+    });
 
+    console.log(invoice);
     return plainToInstance(InvoiceModel, invoice);
   }
 }

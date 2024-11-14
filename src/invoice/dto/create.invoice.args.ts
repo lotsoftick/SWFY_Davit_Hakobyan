@@ -1,10 +1,16 @@
 import { Field, FieldOptions, InputType } from '@nestjs/graphql';
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { LineItemsArgs } from './line.item.args';
 import GraphQLJSON from 'graphql-type-json';
 
 @InputType()
 export class CreateInvoiceArgs {
+  @Field(() => String, {
+    nullable: false,
+  } as FieldOptions<string>)
+  @IsNotEmpty({ message: 'client_id cannot be empty' })
+  clientId: string;
+
   @Field(() => String, {
     nullable: true,
   } as FieldOptions<string>)
@@ -15,9 +21,9 @@ export class CreateInvoiceArgs {
     nullable: true,
   } as FieldOptions<[LineItemsArgs]>)
   @IsOptional()
-  line_items?: LineItemsArgs[];
+  lineItems?: LineItemsArgs[];
 
-  @Field(() => GraphQLJSON, { nullable: true, name: 'customer_data' })
+  @Field(() => GraphQLJSON, { nullable: true })
   @IsOptional()
   customerData?: object;
 }
