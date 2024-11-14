@@ -5,7 +5,7 @@ import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class InvoiceService {
-  public async findById({ id }: { id: number }) {
+  public async findById({ id }: { id: string }) {
     const invoice: InvoiceModel = {
       id: id,
       name: 'Invoice',
@@ -23,7 +23,7 @@ export class InvoiceService {
 
   public async create(args: CreateInvoiceArgs) {
     const invoice: InvoiceModel = {
-      id: 1,
+      id: '1',
       name: 'Invoice',
       status: 'Draft',
       quoteNumber: '1',

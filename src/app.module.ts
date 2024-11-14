@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { InvoiceModule } from './invoice/invoice.module';
 import { ErrorCode } from './common/enum/error.code';
 import { DatabaseModule } from './database/postgres/modules/postgress.database';
+import { ClientModule } from './client/client.module';
 
 registerEnumType(ErrorCode, {
   name: 'ErrorCode',
@@ -17,6 +18,7 @@ registerEnumType(ErrorCode, {
       autoSchemaFile: 'schema.gql',
     }),
     InvoiceModule,
+    ClientModule,
     DatabaseModule,
   ],
   controllers: [AppController],

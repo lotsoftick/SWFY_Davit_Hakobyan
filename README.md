@@ -30,6 +30,12 @@ A hands-on project to test your skills with NestJS, GraphQL, and database operat
 ## Your tasks are:
 
 -  New Feature: Introduce a Client entity (and CRUD) linked to the Invoice entity with a relationship.
+      - Created a migration for the Client table.
+      - Created a database entity for Client and linked it to Invoice.
+      - Implemented CRUD operations for Client.
+      - Added validation exceptions to pinpoint the specific field triggering an error. Detailed error responses are available in the IFailure.alerts object.
+      - Updated base.model to remove snake_case, ensuring consistent camelCase syntax across all application responses.
+      - Modified GetByIdArgs to use UUID instead of int, aligning with the use of UUID in the Invoice migration file instead of a numerical ID. 
 -  Modification: Add a field to Invoice to link to a client and modify the GraphQL resolver to fetch invoices by client
 -  Fix the bug: Invoice creation seems to be malfunctioning
 
