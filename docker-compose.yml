@@ -5,6 +5,24 @@ volumes:
     driver: local
 
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app/
+    image: api
+    container_name: api
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app/
+    command: /bin/sh -c 'pnpm install && pnpm run build && yes Y | pnpm migration:up && pnpm run start:dev'
   db:
     image: postgres:14.1-alpine
     restart: always
